@@ -1,0 +1,48 @@
+server:
+  port: 3000
+  host: "0.0.0.0"
+  logLevel: "info"
+
+redis:
+  enabled: true
+  host: "127.0.0.1"
+  port: 6379
+  keyPrefix: "ratelimit:"
+  connectTimeoutMs: 5000
+
+failMode: "fail_closed"
+
+defaultRule:
+  algorithm: "token_bucket"
+  limit: 100
+  windowSec: 60
+  burst: 20
+
+rules:
+  - route: "/api/search"
+    algorithm: "token_bucket"
+    limit: 100
+    windowSec: 60
+    burst: 20
+
+  - route: "/api/login"
+    algorithm: "sliding_window_log"
+    limit: 5
+    windowSec: 60
+
+  - route: "/api/reports"
+    algorithm: "leaky_bucket"
+    limit: 10
+    windowSec: 30
+    burst: 10
+
+  - route: "/api/stream"
+    algorithm: "sliding_window_counter"
+    limit: 200
+    windowSec: 60
+
+  - clientId: "tier_premium"
+    algorithm: "token_bucket"
+    limit: 1000
+    windowSec: 60
+    burst: 200
