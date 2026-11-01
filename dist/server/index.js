@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
 const index_js_1 = require("../config/index.js");
 const index_js_2 = require("../logger/index.js");
 const prometheus_js_1 = require("../metrics/prometheus.js");
@@ -8,7 +9,7 @@ const redis_limiter_js_1 = require("../algorithms/redis/redis-limiter.js");
 const factory_js_1 = require("../algorithms/factory.js");
 const app_js_1 = require("./app.js");
 async function bootstrap() {
-    const config = (0, index_js_1.loadConfig)();
+    const config = (0, index_js_1.loadConfig)(process.env['CONFIG_PATH'] || 'config/default.yaml');
     let limiter;
     let redis;
     if (config.redis.enabled) {

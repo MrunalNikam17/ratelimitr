@@ -25,15 +25,15 @@ export declare const RateLimitRuleSchema: z.ZodObject<{
 export declare const ServerConfigSchema: z.ZodObject<{
     port: z.ZodDefault<z.ZodNumber>;
     host: z.ZodDefault<z.ZodString>;
-    logLevel: z.ZodDefault<z.ZodEnum<["fatal", "error", "warn", "info", "debug", "trace"]>>;
+    logLevel: z.ZodDefault<z.ZodEnum<["fatal", "error", "warn", "info", "debug", "trace", "silent"]>>;
 }, "strip", z.ZodTypeAny, {
     port: number;
     host: string;
-    logLevel: "fatal" | "error" | "warn" | "info" | "debug" | "trace";
+    logLevel: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent";
 }, {
     port?: number | undefined;
     host?: string | undefined;
-    logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | undefined;
+    logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent" | undefined;
 }>;
 export declare const RedisConfigSchema: z.ZodObject<{
     enabled: z.ZodDefault<z.ZodBoolean>;
@@ -64,15 +64,15 @@ export declare const AppConfigSchema: z.ZodObject<{
     server: z.ZodDefault<z.ZodObject<{
         port: z.ZodDefault<z.ZodNumber>;
         host: z.ZodDefault<z.ZodString>;
-        logLevel: z.ZodDefault<z.ZodEnum<["fatal", "error", "warn", "info", "debug", "trace"]>>;
+        logLevel: z.ZodDefault<z.ZodEnum<["fatal", "error", "warn", "info", "debug", "trace", "silent"]>>;
     }, "strip", z.ZodTypeAny, {
         port: number;
         host: string;
-        logLevel: "fatal" | "error" | "warn" | "info" | "debug" | "trace";
+        logLevel: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent";
     }, {
         port?: number | undefined;
         host?: string | undefined;
-        logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | undefined;
+        logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent" | undefined;
     }>>;
     redis: z.ZodDefault<z.ZodObject<{
         enabled: z.ZodDefault<z.ZodBoolean>;
@@ -148,7 +148,7 @@ export declare const AppConfigSchema: z.ZodObject<{
     server: {
         port: number;
         host: string;
-        logLevel: "fatal" | "error" | "warn" | "info" | "debug" | "trace";
+        logLevel: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent";
     };
     redis: {
         port: number;
@@ -180,7 +180,7 @@ export declare const AppConfigSchema: z.ZodObject<{
     server?: {
         port?: number | undefined;
         host?: string | undefined;
-        logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | undefined;
+        logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent" | undefined;
     } | undefined;
     redis?: {
         port?: number | undefined;

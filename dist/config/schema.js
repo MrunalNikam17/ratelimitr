@@ -20,7 +20,7 @@ exports.RateLimitRuleSchema = zod_1.z.object({
 exports.ServerConfigSchema = zod_1.z.object({
     port: zod_1.z.number().int().positive().default(3000),
     host: zod_1.z.string().default('0.0.0.0'),
-    logLevel: zod_1.z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
+    logLevel: zod_1.z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 });
 exports.RedisConfigSchema = zod_1.z.object({
     enabled: zod_1.z.boolean().default(false),

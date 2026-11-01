@@ -20,7 +20,7 @@ export const RateLimitRuleSchema = z.object({
 export const ServerConfigSchema = z.object({
   port: z.number().int().positive().default(3000),
   host: z.string().default('0.0.0.0'),
-  logLevel: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
+  logLevel: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 });
 
 export const RedisConfigSchema = z.object({

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { loadConfig } from '../config/index.js';
 import { logger } from '../logger/index.js';
 import { metrics } from '../metrics/prometheus.js';
@@ -9,7 +10,7 @@ import { createApp } from './app.js';
 import type { Redis } from 'ioredis';
 
 async function bootstrap(): Promise<void> {
-  const config = loadConfig();
+  const config = loadConfig(process.env['CONFIG_PATH'] || 'config/default.yaml');
   let limiter: RateLimiter;
   let redis: Redis | undefined;
 

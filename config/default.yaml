@@ -4,7 +4,7 @@ server:
   logLevel: "info"
 
 redis:
-  enabled: true
+  enabled: false
   host: "127.0.0.1"
   port: 6379
   keyPrefix: "ratelimit:"
@@ -46,3 +46,31 @@ rules:
     limit: 1000
     windowSec: 60
     burst: 200
+
+  # Benchmark routes (high limits to test sustained throughput across distinct keys)
+  - route: "/bench/fixed-window"
+    algorithm: "fixed_window"
+    limit: 10000000
+    windowSec: 60
+
+  - route: "/bench/token-bucket"
+    algorithm: "token_bucket"
+    limit: 10000000
+    windowSec: 60
+    burst: 10000000
+
+  - route: "/bench/leaky-bucket"
+    algorithm: "leaky_bucket"
+    limit: 10000000
+    windowSec: 60
+    burst: 10000000
+
+  - route: "/bench/sliding-window-counter"
+    algorithm: "sliding_window_counter"
+    limit: 10000000
+    windowSec: 60
+
+  - route: "/bench/sliding-window-log"
+    algorithm: "sliding_window_log"
+    limit: 10000000
+    windowSec: 60

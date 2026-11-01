@@ -13,6 +13,7 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src/**/*.ts tests/**/*.ts",
     "lint:fix": "eslint src/**/*.ts tests/**/*.ts --fix",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "benchmark": "tsx benchmarks/benchmark.ts"
   },

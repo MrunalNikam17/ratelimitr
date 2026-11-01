@@ -89,7 +89,59 @@ npm run benchmark
 
 ---
 
-## Configuration Reference
+## Dashboard (ratelimitr Playground)
+
+An interactive, developer-focused visualization dashboard built with **React**, **TypeScript**, **Tailwind CSS**, and **Recharts** to demonstrate distributed rate limiting dynamics in 30 seconds.
+
+![Boundary Burst Algorithm Comparison](docs/boundary-burst.gif)
+
+### Core Sections
+
+1. **Interactive Playground**:
+   - Live quota consumption gauge, RFC header inspector (`X-RateLimit-Limit`, `Remaining`, `Reset`, `Retry-After`), and millisecond-accurate countdown timer.
+   - Dispatch single requests, burst batches (up to 500 requests), or stream continuous traffic at target rates (up to 50 req/s).
+   - Real-time request timeline stream distinguishing allowed ($200\text{ OK}$) and rate-limited ($429\text{ Too Many Requests}$) events.
+
+2. **Algorithm Comparison & Boundary Exploit Analysis**:
+   - Runs concurrent traffic against all 5 algorithms simultaneously with isolated keys.
+   - **Window-Boundary Burst Demonstration**: Calculates exact epoch window boundaries (`Date.now() % windowMs`) and fires bursts right before and after boundary transitions. Visibly demonstrates why naive **Fixed Window Counter** admits $\sim 2\times$ the limit across boundaries while **Sliding Window Log**, **Sliding Window Counter**, **Token Bucket**, and **Leaky Bucket** enforce strict limits.
+   - Small-multiple Recharts area/bar charts displaying admitted vs blocked requests per second with algorithm-specific behavioral notes.
+
+3. **Cluster Observability & Metrics**:
+   - Real-time polling of `/health` and Prometheus text exposition (`/metrics`).
+   - Cluster storage engine status (Redis cluster vs in-memory fallback) and node uptime.
+   - Linear interpolation of Prometheus histogram buckets (`ratelimit_duration_seconds_bucket`) estimating **p50** and **p95** check latencies.
+   - Comprehensive throughput breakdown (allowed vs blocked) per algorithm and store error tracking (`ratelimit_store_errors_total`).
+
+<div align="center">
+  <img src="docs/dashboard-playground.png" alt="ratelimitr Playground" width="48%" />
+  <img src="docs/dashboard-status.png" alt="Cluster Observability" width="48%" />
+</div>
+
+### Running the Dashboard
+
+#### 1. Local Development (with Vite Proxy)
+Ensure the `ratelimitr` backend is running on `http://localhost:3000`. Then launch the dashboard:
+
+```bash
+cd dashboard
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173`. The Vite development server automatically proxies API requests (`/check`, `/health`, `/metrics`) to the Express backend without requiring CORS.
+
+#### 2. Production Docker & Nginx
+When running via Docker Compose (`docker compose up --build -d`), the dashboard can be built and mounted directly into Nginx:
+
+```bash
+cd dashboard && npm run build && cd ..
+docker compose up -d nginx
+```
+
+The production dashboard is served at `http://localhost/ui/`.
+
+---
 
 Configure `ratelimitr` via `config/default.yaml` or environment variables:
 
